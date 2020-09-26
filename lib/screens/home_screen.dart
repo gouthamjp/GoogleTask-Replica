@@ -5,6 +5,7 @@ import '../provider/taskList.dart';
 import '../widget/tast_bottom.dart';
 import '../widget/point_task.dart';
 
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+   
     final listData = Provider.of<TaskList>(context);
     void _addTask() {
       showModalBottomSheet(
@@ -47,7 +49,9 @@ class _HomeState extends State<Home> {
               child: ListView.builder(
                   itemCount: listData.len(),
                   itemBuilder: (BuildContext context, int i) {
-                    return PointTask(dat: listData.items[i].task,);
+                    return PointTask(
+                      dat: listData.items[i].task,
+                    );
                   }),
             ),
           ),

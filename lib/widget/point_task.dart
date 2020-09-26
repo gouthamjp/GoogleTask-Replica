@@ -24,6 +24,7 @@ class _PointTaskState extends State<PointTask> {
       padding: const EdgeInsets.all(15),
       child: Row(children: <Widget>[
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: del,
           child: Container(
             margin: EdgeInsets.only(right: 10),
@@ -35,9 +36,11 @@ class _PointTaskState extends State<PointTask> {
                 border: Border.all(color: Colors.grey)),
           ),
         ),
-        Text(
-          widget.dat,
-          style: TextStyle(fontSize: 18),
+        Expanded(
+                  child: Text(
+            widget.dat,
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       ]),
     );

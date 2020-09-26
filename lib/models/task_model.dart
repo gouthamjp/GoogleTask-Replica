@@ -1,10 +1,11 @@
 class TaskModel {
-
+  DateTime aTime;
   String task;
   bool fin;
 
-  TaskModel({
 
+  TaskModel({
+    this.aTime,
     this.task,
     this.fin,
   });
