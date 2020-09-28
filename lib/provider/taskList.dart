@@ -12,14 +12,15 @@ class TaskList with ChangeNotifier {
     return [..._items];
   }
 
-  void addTimeDate(DateTime one, TimeOfDay two) {
+  // void addTimeDate(DateTime one, TimeOfDay two) {
+  //   _localD = one;
+  //   _localD = new DateTime(one.year, one.month, one.day, two.hour, two.minute);
+  // }
+
+  void addTask(String val,DateTime one, TimeOfDay two) {
+    TaskModel temp = new TaskModel();
     _localD = one;
     _localD = new DateTime(one.year, one.month, one.day, two.hour, two.minute);
-  }
-
-  void addTask(String val) {
-    TaskModel temp = new TaskModel();
-
     temp.task = val;
     temp.fin = false;
     temp.aTime = _localD;
