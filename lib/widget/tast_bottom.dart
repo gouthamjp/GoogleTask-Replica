@@ -15,13 +15,18 @@ class _BottomTaskState extends State<BottomTask> {
   var _date;
   var _selectedTime;
 
-  //Local Notification Code initialisation
+  //Local Notification Code part
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
   var initializationSettingAndroid;
   var initializationSettingIOS;
   var initializationSetting;
+
+  void _setNotification(DateTime a) async {
+    await _demoNotification(a);
+  }
+
   Future<void> _demoNotification(DateTime timeS) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'Channel_id', 'Channel_name', 'Channel_description',
@@ -37,33 +42,17 @@ class _BottomTaskState extends State<BottomTask> {
         payload: 'test payload');
   }
 
-  void _setNotification(DateTime a) async {
-    await _demoNotification(a);
-  }
-  //Local Notification Code initialisation
-
-  //local notification main functions
-  void initSTate() {
+  @override
+  void initState() {
     super.initState();
-    {
-      initializationSettingAndroid =
-          new AndroidInitializationSettings("app_icon");
-      initializationSettingIOS = new IOSInitializationSettings(
-          onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-      initializationSetting = new InitializationSettings(
-          initializationSettingAndroid, initializationSettingIOS);
-      flutterLocalNotificationsPlugin.initialize(initializationSetting,
-          onSelectNotification: onSelectNotification);
-      //setting up the localnotificaiton
-    }
-  }
-
-  Future onSelectNotification(String payload) async {
-    if (payload != Null) {
-      debugPrint('Notification payload: $payload');
-    }
-    await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SecondRoute()));
+    initializationSettingAndroid =
+        new AndroidInitializationSettings("app_icon");
+    initializationSettingIOS = new IOSInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    initializationSetting = new InitializationSettings(
+        initializationSettingAndroid, initializationSettingIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSetting,
+        onSelectNotification: onSelectNotification);
   }
 
   Future onDidReceiveLocalNotification(
@@ -87,7 +76,15 @@ class _BottomTaskState extends State<BottomTask> {
             ));
   }
 
-//local notification main functions
+  Future onSelectNotification(String payload) async {
+    if (payload != Null) {
+      debugPrint('Notification payload: $payload');
+    }
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SecondRoute()));
+  }
+
+//local notification part
 
   @override
   Widget build(BuildContext context) {
