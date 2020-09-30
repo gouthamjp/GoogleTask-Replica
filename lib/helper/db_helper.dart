@@ -5,22 +5,23 @@ import 'package:sqflite/sqlite_api.dart';
 class DBHelper {
   static Future<Database> database() async {
     final dbPath = await sql.getDatabasesPath();
-    return sql.openDatabase(path.join(dbPath, 'task.db'),
+    return sql.openDatabase(path.join(dbPath, 'places.db'),
         onCreate: (db, version) {
-      return db.execute('CREATE TABLE tasks(task TEXT PRIMARY KEY, date TEXT)');
+      return db.execute(
+          'CREATE TABLE user_places(task TEXT PRIMARY KEY)');
     }, version: 1);
   }
 
-  static Future<List<Map<String, dynamic>>> insert(String table, Map<String, Object> data) async {
+  static Future<void> insert(String table, Map<String, Object> data) async {
     final db = await DBHelper.database();
     db.insert(
       table,
       data,
-      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<void> getData(String table)async {
+  static Future<List<Map<String, dynamic>>> getData(String table) async {
     final db = await DBHelper.database();
     return db.query(table);
   }

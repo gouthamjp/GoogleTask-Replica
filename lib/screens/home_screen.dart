@@ -5,7 +5,6 @@ import '../provider/taskList.dart';
 import '../widget/tast_bottom.dart';
 import '../widget/point_task.dart';
 
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -14,8 +13,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-   
-    final listData = Provider.of<TaskList>(context);
     void _addTask() {
       showModalBottomSheet(
           isScrollControlled: true,
@@ -33,7 +30,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -46,14 +43,30 @@ class _HomeState extends State<Home> {
           Expanded(
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
-              child: ListView.builder(
-                  itemCount: listData.len(),
-                  itemBuilder: (BuildContext context, int i) {
-                    return PointTask(
-                      dat: listData.items[i].task,
-                      strike: listData.items[i].fin,
-                    );
-                  }),
+              child: FutureBuilder(
+                future: Provider.of<TaskList>(context, listen: false)
+                    .fetchAndSetTasks(),
+                builder: (ctx, snapshot) =>
+                    snapshot.connectionState == ConnectionState.waiting
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Consumer<TaskList>(
+                            child: Center(
+                              child: const Text('No Tasks Yet!'),
+                            ),
+                            builder: (ctx, listdata, ch) =>
+                                listdata.items.length <= 0
+                                    ? ch
+                                    : ListView.builder(
+                                        itemCount: listdata.items.length,
+                                        itemBuilder: (ctx, i) => PointTask(
+                                          dat: listdata.items[i].task,
+                                          strike: false,
+                                        ),
+                                      ),
+                          ),
+              ),
             ),
           ),
           Container(

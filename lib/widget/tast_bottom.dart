@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:task/screens/home_screen.dart';
 
 import '../provider/taskList.dart';
 
@@ -23,11 +24,11 @@ class _BottomTaskState extends State<BottomTask> {
   var initializationSettingIOS;
   var initializationSetting;
 
-  void _setNotification(DateTime a) async {
-    await _demoNotification(a);
+  void _setNotification(DateTime a,String b) async {
+    await _demoNotification(a,b);
   }
 
-  Future<void> _demoNotification(DateTime timeS) async {
+  Future<void> _demoNotification(DateTime timeS,String b) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'Channel_id', 'Channel_name', 'Channel_description',
         importance: Importance.Max,
@@ -38,7 +39,7 @@ class _BottomTaskState extends State<BottomTask> {
         androidPlatformChannelSpecifics, iosChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.schedule(
-        0, "Flutter App", "Task Reminder", timeS, platformChannelSpecifics,
+        0, "Task Reminder", b, timeS, platformChannelSpecifics,
         payload: 'test payload');
   }
 
@@ -69,7 +70,7 @@ class _BottomTaskState extends State<BottomTask> {
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true).pop();
                     await Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SecondRoute()));
+                        MaterialPageRoute(builder: (context) => Home()));
                   },
                 )
               ],
@@ -81,7 +82,7 @@ class _BottomTaskState extends State<BottomTask> {
       debugPrint('Notification payload: $payload');
     }
     await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SecondRoute()));
+        context, MaterialPageRoute(builder: (context) => Home()));
   }
 
 //local notification part
@@ -179,8 +180,8 @@ class _BottomTaskState extends State<BottomTask> {
                             _selectedTime.hour,
                             _selectedTime.minute,
                           );
-                          _setNotification(_popTime);
-                          _listData.addTask(_task.text, _date, _selectedTime);
+                          _setNotification(_popTime,_task.text);
+                          _listData.addTask(_task.text);
                           Navigator.pop(context);
                         }
                       },
@@ -214,19 +215,3 @@ Future<TimeOfDay> _selectTime(BuildContext context) => showTimePicker(
           TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),
     );
 
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Alert Page"),
-        ),
-        body: Center(
-            child: RaisedButton(
-          child: Text("Go back"),
-          onPressed: () {
-            Navigator.of(context);
-          },
-        )));
-  }
-}

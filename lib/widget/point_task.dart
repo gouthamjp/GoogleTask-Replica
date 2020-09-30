@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../provider/taskList.dart';
 
 class PointTask extends StatefulWidget {
-  String dat;
-  bool strike;
+  final String dat;
+   bool strike;
   PointTask({
     this.dat,
     this.strike
