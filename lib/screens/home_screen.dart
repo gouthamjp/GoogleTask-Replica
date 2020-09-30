@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
                   itemBuilder: (BuildContext context, int i) {
                     return PointTask(
                       dat: listData.items[i].task,
+                      strike: listData.items[i].fin,
                     );
                   }),
             ),

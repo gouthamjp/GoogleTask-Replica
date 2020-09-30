@@ -77,7 +77,7 @@ class _BottomTaskState extends State<BottomTask> {
   }
 
   Future onSelectNotification(String payload) async {
-    if (payload != Null) {
+    if (payload != null) {
       debugPrint('Notification payload: $payload');
     }
     await Navigator.push(
