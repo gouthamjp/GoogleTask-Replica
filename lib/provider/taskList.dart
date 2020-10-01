@@ -6,19 +6,17 @@ import '../helper/db_helper.dart';
 class TaskList with ChangeNotifier {
   List<TaskModel> _items;
 
-
   List<TaskModel> get items {
     return [..._items];
   }
 
-  void addTask(String val,String dat) {
+  void addTask(String val, String dat, int st) {
     final temp = TaskModel(
-    task:  val,
-    dateString: dat,
-    fin : 0,
+      task: val,
+      dateString: dat,
+      fin: st,
     );
 
-  
     _items.add(temp);
 
     notifyListeners();
@@ -40,15 +38,17 @@ class TaskList with ChangeNotifier {
           ),
         )
         .toList();
-        notifyListeners();
+    notifyListeners();
   }
 
+  Future<void> check(String data, String date, int b) async {
+    var up = await DBHelper().update('user_places', data, date, b);
 
-  void check(String data) {
     _items.forEach((element) {
       if (element.task == data) {
         element.fin = 1;
       }
     });
+    notifyListeners();
   }
 }

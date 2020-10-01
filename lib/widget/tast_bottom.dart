@@ -182,7 +182,7 @@ class _BottomTaskState extends State<BottomTask> {
                           );
                           _setNotification(_popTime,_task.text);
                           var temp = DateFormat('dd-MM-yyyy – kk:mm').format(_popTime);
-                          _listData.addTask(_task.text,temp);
+                          _listData.addTask(_task.text,temp,0);
                           Navigator.pop(context);
                         }
                       },
@@ -215,4 +215,3 @@ Future<TimeOfDay> _selectTime(BuildContext context) => showTimePicker(
       initialTime:
           TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),
     );
-

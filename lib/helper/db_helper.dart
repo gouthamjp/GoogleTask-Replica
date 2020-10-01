@@ -25,4 +25,19 @@ class DBHelper {
     final db = await DBHelper.database();
     return db.query(table);
   }
+
+  Future<int> update(String table , String change , String date , int a)async{
+    
+    final db = await DBHelper.database();
+    var res = await db.update(table, 
+    {
+      'task':change,
+      'date':date,
+      'fin':a
+    },
+    where: "task =?",
+    whereArgs: [change]
+    );
+    return res;
+  }
 }

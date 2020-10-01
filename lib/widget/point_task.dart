@@ -6,7 +6,7 @@ import '../provider/taskList.dart';
 class PointTask extends StatefulWidget {
   final String datnow;
   final String dat;
-   int strike;
+  final int strike;
   PointTask({
     this.dat,
     this.strike,
@@ -21,10 +21,8 @@ class _PointTaskState extends State<PointTask> {
   Widget build(BuildContext context) {
     final listData = Provider.of<TaskList>(context);
     void del() {
-      listData.check(widget.dat);
+      listData.check(widget.dat,widget.datnow,1);
     }
-
-  
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -34,7 +32,6 @@ class _PointTaskState extends State<PointTask> {
           onTap: (){
             setState(() {
               del();
-              widget.strike = 1;
             });
           },
           child: Container(
