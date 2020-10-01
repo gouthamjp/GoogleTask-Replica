@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import '../provider/taskList.dart';
 
 class PointTask extends StatefulWidget {
+  final String datnow;
   final String dat;
-   bool strike;
+   int strike;
   PointTask({
     this.dat,
-    this.strike
+    this.strike,
+    this.datnow,
   });
   @override
   _PointTaskState createState() => _PointTaskState();
@@ -32,7 +34,7 @@ class _PointTaskState extends State<PointTask> {
           onTap: (){
             setState(() {
               del();
-              widget.strike = !widget.strike;
+              widget.strike = 1;
             });
           },
           child: Container(
@@ -46,10 +48,17 @@ class _PointTaskState extends State<PointTask> {
           ),
         ),
         Expanded(
-                  child: Text(
+                  child: Column(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
             widget.dat,
-            style: TextStyle(fontSize: 18, decoration: widget.strike? TextDecoration.lineThrough:TextDecoration.none),
+            style: TextStyle(fontSize: 18, decoration: widget.strike>0? TextDecoration.lineThrough:TextDecoration.none),
           ),
+          Text(widget.datnow,style: TextStyle(fontSize: 8, decoration: widget.strike>0? TextDecoration.lineThrough:TextDecoration.none)),
+                    ],
+                  ),
         ),
       ]),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../provider/taskList.dart';
 import '../widget/tast_bottom.dart';
@@ -11,8 +12,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
+ 
     void _addTask() {
       showModalBottomSheet(
           isScrollControlled: true,
@@ -62,7 +65,8 @@ class _HomeState extends State<Home> {
                                         itemCount: listdata.items.length,
                                         itemBuilder: (ctx, i) => PointTask(
                                           dat: listdata.items[i].task,
-                                          strike: false,
+                                          datnow: listdata.items[i].dateString,
+                                          strike: listdata.items[i].fin,
                                         ),
                                       ),
                           ),

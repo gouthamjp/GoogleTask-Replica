@@ -2,10 +2,15 @@
 class TaskModel {
 
   String task;
-  bool fin;
+  int fin;
+  String dateString;
 
   TaskModel({
     this.task,
     this.fin,
+    this.dateString,
   });
+
+  
 }
+

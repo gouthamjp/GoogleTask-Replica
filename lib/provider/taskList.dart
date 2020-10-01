@@ -11,17 +11,21 @@ class TaskList with ChangeNotifier {
     return [..._items];
   }
 
-  void addTask(String val) {
+  void addTask(String val,String dat) {
     final temp = TaskModel(
     task:  val,
-    fin : false,
+    dateString: dat,
+    fin : 0,
     );
 
+  
     _items.add(temp);
 
     notifyListeners();
     DBHelper.insert('user_places', {
       'task': temp.task,
+      'date': temp.dateString,
+      'fin': temp.fin,
     });
   }
 
@@ -31,7 +35,8 @@ class TaskList with ChangeNotifier {
         .map(
           (item) => TaskModel(
             task: item['task'],
-            fin: false,
+            dateString: item['date'],
+            fin: item['fin'],
           ),
         )
         .toList();
@@ -42,7 +47,7 @@ class TaskList with ChangeNotifier {
   void check(String data) {
     _items.forEach((element) {
       if (element.task == data) {
-        element.fin = true;
+        element.fin = 1;
       }
     });
   }

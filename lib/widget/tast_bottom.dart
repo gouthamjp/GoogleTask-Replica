@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:task/screens/home_screen.dart';
-
+import 'package:intl/intl.dart';
 import '../provider/taskList.dart';
 
 class BottomTask extends StatefulWidget {
@@ -181,7 +181,8 @@ class _BottomTaskState extends State<BottomTask> {
                             _selectedTime.minute,
                           );
                           _setNotification(_popTime,_task.text);
-                          _listData.addTask(_task.text);
+                          var temp = DateFormat('dd-MM-yyyy – kk:mm').format(_popTime);
+                          _listData.addTask(_task.text,temp);
                           Navigator.pop(context);
                         }
                       },
